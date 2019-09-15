@@ -31,7 +31,7 @@
 import math
 
 import digitalio
-from neopixel_write import neopixel_write
+from neopixel_write import neopixel_write, neopixel_cleanup
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_NeoPixel.git"
@@ -109,6 +109,8 @@ class NeoPixel:
         for i in range(len(self.buf)):
             self.buf[i] = 0
         neopixel_write(self.pin, self.buf)
+        # This is required to avoid memory leak warnings
+        neopixel_cleanup()
         self.pin.deinit()
 
     def __enter__(self):
